@@ -70,7 +70,7 @@ async def restriction_app(app :app, message):
                     await message.reply(random.choice(strict_txt))          
                 else:
                     await app.ban_chat_member(chat_id, user_id)
-                    await message.reply("OK, Ban kar diya madrchod ko sala Chutiya tha !")
+                    await message.reply("OK, Ban kar diya Chutiya tha !")
                     
         for unbanned in data:
             print(f"present {unbanned}")
@@ -87,7 +87,7 @@ async def restriction_app(app :app, message):
                 else:
                     await app.ban_chat_member(chat_id, user_id)
                     await app.unban_chat_member(chat_id, user_id)
-                    await message.reply("get lost! bhga diya bhosdi wale ko") 
+                    await message.reply("get lost! bhga diya sale ko") 
                     
         for muted in data:
             print(f"present {muted}") 
@@ -98,14 +98,14 @@ async def restriction_app(app :app, message):
                 else:
                     permissions = ChatPermissions(can_send_messages=False)
                     await message.chat.restrict_member(user_id, permissions)
-                    await message.reply(f"muted successfully! Disgusting people.") 
+                    await message.reply(f"muted successfully! bhut bolta tha ye.") 
                     
         for unmuted in data:
             print(f"present {unmuted}")            
             if unmuted in unmute:
                 permissions = ChatPermissions(can_send_messages=True)
                 await message.chat.restrict_member(user_id, permissions)
-                await message.reply(f"Huh, OK, sir!")   
+                await message.reply(f"Huh, OK, sir!aap bol rhe ho isliye unmute kar rhe")   
 
 
         for promoted in data:
@@ -122,7 +122,7 @@ async def restriction_app(app :app, message):
                     can_manage_video_chats=True,
                        )
                      )
-                await message.reply("promoted !")
+                await message.reply("promoted !admin to bna diya galat use mt krna adminship ka")
 
         for demoted in data:
             print(f"present {demoted}")            
@@ -138,6 +138,6 @@ async def restriction_app(app :app, message):
                     can_manage_video_chats=False,
                        )
                      )
-                await message.reply("demoted !")
+                await message.reply("demoted !adminship ke layak tha bhi nhi ye")
 
 
