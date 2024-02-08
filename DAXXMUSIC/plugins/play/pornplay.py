@@ -4,15 +4,15 @@ from bs4 import BeautifulSoup
 from DAXXMUSIC import app
 import pytgcalls
 import os, yt_dlp 
-from pyrogram.types import CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup
+from pyrogram.types import CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton, Message
 from pytgcalls.types import AudioVideoPiped
 from DAXXMUSIC.plugins.play import play
 from DAXXMUSIC.plugins.play.pornplay import play
 
-
 #
 #####
 
+vdo_link = {}
 
 keyboard = InlineKeyboardMarkup([
         [
@@ -62,7 +62,7 @@ async def get_video_stream(link):
 
 
 def get_video_info(title):
-    url_base = f'https://www.pornhub.com/search/{title}'
+    url_base = f'https://www.xnxx.com/search/{title}'
     try:
         with requests.Session() as s:
             r = s.get(url_base)
@@ -95,13 +95,19 @@ async def get_random_video_info(client, message):
     if video_info:
         video_link = video_info['link']
         video = await get_video_stream(video_link)
-        await message.reply_video(video, caption=f"{title}", reply_markup=keyboard)
+        vdo_link[message.chat.id] = {'link': video_link}
+        keyboard1 = InlineKeyboardMarkup([
+            [
+                InlineKeyboardButton("⊝ ᴄʟᴏsᴇ ⊝", callback_data="close_data"), 
+                InlineKeyboardButton("⊝ ᴠᴘʟᴀʏ⊝", callback_data=f"vplay"),
+            ]
+    ])
+        await message.reply_video(video, caption=f"{title}", reply_markup=keyboard1)
              
     else:
         await message.reply(f"No video link found for '{title}'.")
 
 ######
-
 
 
 @app.on_message(filters.command("xnxx"))
@@ -112,8 +118,8 @@ async def get_random_video_info(client, message):
 
     title = ' '.join(message.command[1:])
     video_info = get_video_info(title)
-    
-    if video_info:
+
+if video_info:
         video_link = video_info['link']
         video = await get_video_stream(video_link)
         
@@ -128,4 +134,3 @@ async def get_random_video_info(client, message):
         )
     else:
         await message.reply(f"No video link found for '{title}'.")
-            
